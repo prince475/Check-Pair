@@ -141,7 +141,105 @@ Auxiliary Space: O(1)
    } else {
         console.log("Array does not have two elements with the given sum");
    }
-    
 ```
+
+### Using Binary Search Implementation
+
+- For binary search implementations, we iterate through each element in the array and use the Binary Search
+  to find the complement of the current element in the remaining array.
+
+```js
+    
+    function hasArrayTwoCandidatesBinarySearch(arr, targetSum) {
+        
+        // Create a copy of the array to preserve the original order
+        const sortedArray = [...arr];
+
+        // Sort the elements
+        sortedArray.sort((a, b) => a - b);
+
+        // Iterate through each element in the array
+        for (let i = 0; i < sortedArray.length; i++) {
+            const complement = targetSum - sortedArray[i];
+            
+            // Use binary search to find the complement in the remaining array
+            if (binarySearch(sortedArray, complement, i + 1)) {
+                return true; // Array has two elements with the given sum
+            }
+        }
+
+        return false; // Array doesn't have two elements with the given sum
+    }
+
+    // Binary Search function
+    function binarySearch(arr, target, start) {
+        let left = start;
+        let right = arr.length - 1;
+
+        while (left <= right) {
+            const mid = Math.floor((left + right) / 2);
+
+            if (arr[mid] === target) {
+                return true; // Element found
+            } else if (arr[mid] < target) {
+                left = mid + 1; // Search in the right half
+            } else {
+                right = mid - 1; // Search in the left half
+            }
+        }
+
+        return false; // Element not found
+    }
+
+    // Driver program to test the function
+    const originalArrayBinarySearch = [1, 4, 45, 6, 10, -8];
+    const targetSumBinarySearch = 16;
+
+    // Function calling
+    if (hasArrayTwoCandidatesBinarySearch(originalArrayBinarySearch, targetSumBinarySearch)) {
+        console.log("Array has two elements with the given sum (Binary Search)");
+    } else {
+        console.log("Array doesn't have two elements with the given sum (Binary Search)");
+    }
+
+```
+
+### Implementing the solution using Hashing functions
+
+- When using the Hashing function, we use a Set to keep track of the elements seen so far and
+  check if the complement of the current element is already in the set.
+
+```js
+    function hasArrayTwoCandidatesHashing(arr, targetSum) {
+        const seen = new Set();
+
+        // Iterate through each element in the array
+        for (const num of arr) {
+            const complement = targetSum - num;
+
+            // Check if the complement is already seen
+            if (seen.has(complement)) {
+                return true; // Array has two elements with the given sum
+            } else {
+                seen.add(num);
+            }
+        }
+
+        return false; // Array doesn't have two elements with the given sum
+    }
+
+    // Driver program to test the function
+    const originalArrayHashing = [1, 4, 45, 6, 10, -8];
+    const targetSumHashing = 16;
+
+    // Function calling
+    if (hasArrayTwoCandidatesHashing(originalArrayHashing, targetSumHashing)) {
+        console.log("Array has two elements with the given sum (Hashing)");
+    } else {
+        console.log("Array doesn't have two elements with the given sum (Hashing)");
+    }
+
+```
+
 
 
