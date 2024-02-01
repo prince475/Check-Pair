@@ -98,43 +98,49 @@ Auxiliary Space: O(1)
 ### Code implementation
 
 ```js
-    // Javascript program to check if given array
-    // has 2 elements whose sum is equal
-    // to the given value
-    
-    // Function to check if array has 2 elements
-    // whose sum is equal to the given value
-    function hasArrayTwoCandidates(A, arr_size, sum) {
-        var l, r;
-    
-        /* Sort the elements */
-        A.sort();
-    
-        /* Now look for the two candidates in the sorted array*/
-        l = 0;
-        r = arr_size - 1;
-        while (l < r) {
-            if (A[l] + A[r] == sum)
-                return 1;
-            else if (A[l] + A[r] < sum)
-                l++;
-            else // A[i] + A[j] > sum
-                r--;
+    // Javascript program to check if given array has 2 elements whose sum is equal to the given value.
+   
+   // First step is to write a function that checks if given array has 2 elements whose sum is equal to the given value.
+   function hasArrayTwoCandidates (arr, targetSum) {
+
+        // lets first create a copy of our original array, 
+        // as best practice and also to preserve the original order.
+        const sortedArray = [...arr];
+
+        // now performing sorting on the elements of the array
+        sortedArray.sort((a, b) => a - b);
+
+        // Lets initialize two pointers to the array
+        let left = 0;
+        let right = sortedArray.length - 1; 
+
+        // now lets search for two candidates in the sorted array
+        while (left < right) {
+            const currentSum = sortedArray[left] + sortedArray[right];
+
+            if (currentSum === targetSum ) {
+                return true; // And we say that the Array has two elements with the given sum
+            } else if (currentSum < targetSum) {
+                left++;
+            } else {
+                right--;
+            }
         }
-        return 0;
-    }
-    
-    /* Driver program to test above function */
-    var A = [ 1, 4, 45, 6, 10, -8 ]
-    var n = 16;
-    var arr_size = A.length;
-    // Function calling
-    if (hasArrayTwoCandidates(A, arr_size, n))
-        document.write("Array has two elements" +
-                " with the given sum");
-    else
-        document.write("Array doesn't have two" +
-                " elements with the given sum");
+
+        return false; // Meaning the array doesn't have two elements with the given sum
+   }
+
+   // Writing our Test function
+   // The Driver program to test our function
+   const originalArray = [1, 4, 45, 6, 10, -8];
+   const targetSum = 16;
+
+   // Function Calling
+   if (hasArrayTwoCandidates(originalArray, targetSum)) {
+        console.log("Array has two elements with the given sum");
+   } else {
+        console.log("Array does not have two elements with the given sum");
+   }
     
 ```
 
